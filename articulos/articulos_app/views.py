@@ -1,5 +1,5 @@
-from re import A
 from django.shortcuts import render, HttpResponse
+from django.http import JsonResponse
 from .models import Articulo
 
 # Create your views here.
@@ -14,11 +14,17 @@ def listar_articulos(request):
 
 def listar_hardware(request):
 
-    hardware = {}
+    cat = Articulo.objects.filter(categoria="Hard")
+    articulo = {'categorias': cat}
 
-    if Articulo.categoria == "Hardware":
-        hardware['codigo'] = Articulo.codigo
-        hardware['descripcion'] = Articulo.descripcion
+    return render(request, 'articulos_app/hardware.html', articulo)
+    
+    
+def listar_software(request):
 
-    return render(request, 'articulos_app/hardware.html', hardware) 
+    cat = Articulo.objects.filter(categoria="Soft")
+    articulo = {'categorias': cat}
+
+    return render(request, 'articulos_app/software.html', articulo)
+    
          
